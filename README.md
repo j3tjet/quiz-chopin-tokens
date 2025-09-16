@@ -5,18 +5,14 @@ Demo educativa para introducir Chopin (login y verificabilidad) y Celestia (Data
 - Respuestas con tiempo verificable (Oracle.now) y notarización (Oracle.notarize).
 - Leaderboard por acierto y rapidez.
 
-Nota: Esta demo NO usa “modo demo”; el backend requiere sesión de Chopin.
-
-==================================================
 REQUISITOS
-==================================================
+
 - Node 18 o superior (recomendado Node 20)
 - npm 8 o superior
 - Navegador moderno (Chrome, Edge o Firefox actualizados)
 
-==================================================
 INSTALACIÓN
-==================================================
+
 1) Clonar el repositorio y entrar a la carpeta del proyecto
    git clone <TU_REPO_URL>
    cd quiz-chopin
@@ -24,9 +20,8 @@ INSTALACIÓN
 2) Instalar dependencias
    npm i
 
-==================================================
 EJECUCIÓN LOCAL (MODO VERIFICABLE)
-==================================================
+
 Este proyecto usa el proxy de Chopin (chopd) en el puerto 4000 y un servidor Next en el puerto 3000.
 
 OPCIÓN A — Una sola terminal (recomendada)
@@ -46,9 +41,9 @@ OPCIÓN B — Dos terminales
 - Terminal B (proxy de Chopin en 4000):
   npx chopd
 
-==================================================
+
 USO LOCAL (SIMULAR VARIOS PARTICIPANTES)
-==================================================
+
 1) Abrir varias ventanas privadas o perfiles de navegador (Incógnito/InPrivate/Private).
 2) En cada ventana:
    - Entrar a:  http://localhost:4000/quiz
@@ -59,9 +54,8 @@ USO LOCAL (SIMULAR VARIOS PARTICIPANTES)
 
 Nota: El almacenamiento es en memoria. Al reiniciar el servidor se borra el historial (ideal para talleres).
 
-==================================================
 ARCHIVOS CLAVE
-==================================================
+
 - app/quiz/page.tsx            → UI del quiz
 - components/AuthButton.tsx    → login de Chopin y detección de address
 - lib/questions.ts             → banco de preguntas básicas
@@ -70,9 +64,8 @@ ARCHIVOS CLAVE
 - app/api/quiz/leaderboard/route.ts → ranking por acierto y rapidez
 - app/api/quiz/proof/[id]/route.ts   → muestra la prueba JSON de una respuesta
 
-==================================================
 PROBLEMAS COMUNES
-==================================================
+
 1) “Error occurred while trying to proxy: localhost:4000/”
    - El proxy en 4000 no encuentra el target en 3000.
    - Soluciones:
