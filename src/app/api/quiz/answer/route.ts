@@ -3,7 +3,7 @@ import { Oracle, getAddress } from "@chopinframework/next";
 import { randomUUID } from "crypto";
 import { QUESTIONS } from "@/lib/questions";
 import AuthButton from "@/components/AuthButton";
-import { dbAddResponse, dbFindResponse, ResponseRec } from "@/lib/db";
+import { dbAddResponse, dbFindResponse, ResponseRec } from "@/lib/responses";
 
 export async function POST(req: Request) {
   const { questionId, choiceIndex } = await req.json();
@@ -23,6 +23,7 @@ export async function POST(req: Request) {
   }
 
   const q = QUESTIONS.find((x) => x.id === String(questionId));
+  console.log("q es =====", q);
   if (!q)
     return NextResponse.json(
       { error: "Pregunta inexistente" },
@@ -30,7 +31,9 @@ export async function POST(req: Request) {
     );
 
   // Anti-doble envío por jugador/pregunta
-  const exists = dbFindResponse(player, q.id);
+  console .log("player es =====", player);
+  const exists = await dbFindResponse(player, q.id);
+  console.log("Respuesta ya existe", exists);
   if (exists)
     return NextResponse.json({ error: "Ya respondiste" }, { status: 409 });
 

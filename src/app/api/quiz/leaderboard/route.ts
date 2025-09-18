@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { dbGetResponses } from "@/lib/db";
+import { dbGetResponses } from "@/lib/responses";
 import { QUESTIONS } from "@/lib/questions";
 
 type ScoreMap = Record<string, number>;
 
 export async function GET() {
-  const responses = dbGetResponses();
+  const responses = await dbGetResponses();
   const scores: ScoreMap = {};
 
   // 10 pts por acierto

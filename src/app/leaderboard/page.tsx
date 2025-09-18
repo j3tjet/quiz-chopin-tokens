@@ -13,6 +13,9 @@ enum State {
 export default function LeaderboardPage() {
   const [rows, setRows] = useState<Row[]>([]);
   const [state, setState] = useState<State>(State.Idle);
+  const [claimed, setClaimed] = useState(false);
+  const [claiming, setClaiming] = useState(false);
+  const [claimMsg, setClaimMsg] = useState<string | null>(null);
 
   useEffect(() => {
     setState(State.Loading);
@@ -25,9 +28,34 @@ export default function LeaderboardPage() {
       .catch(() => setState(State.Error));
   }, []);
 
+  async function handleClaim() {
+    setClaimMsg(null);
+    setClaiming(true);
+    try {
+      const res = await fetch("/api/token/mint", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || "Error al reclamar");
+      setClaimMsg(` Reclamaste ${data.minted} tokens.`);
+      setClaimed(true);
+    } catch (e: any) {
+      setClaimMsg(` ${e.message}`);
+      if (e.message.includes("Ya reclamaste")) {
+        setClaimed(true);
+      }
+    } finally {
+      setClaiming(false);
+    }
+  }
+  
+
   return (
     <div style={{ maxWidth: 680, margin: "0 auto", padding: 16 }}>
-      <h1>Leaderboard</h1>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <h1>Leaderboard</h1>
+        <button onClick={handleClaim} disabled={claiming || claimed}>
+          {claimed ? "Ya reclamado" : claiming ? "Reclamando…" : "Reclamar tokens"}
+        </button>
+      </div>
       {state === State.Loading && <p>Cargando…</p>}
       {state === State.Error && <p>Error al cargar leaderboard.</p>}
       {state === State.Ready && (

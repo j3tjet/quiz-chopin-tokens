@@ -8,6 +8,8 @@ export default function AuthButton({
   onAuth: (addr: string) => void;
 }) {
   const [address, setAddress] = useState<string | null>(null);
+  const [balance, setBalance] = useState<number | null>(null);
+  const [symbol, setSymbol] = useState<string>("QUIZ");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showModal, setShowModal] = useState<null | {
@@ -32,6 +34,15 @@ export default function AuthButton({
       if (!res.ok) throw new Error(data?.error || "No se pudo iniciar sesión");
       setAddress(data.address);
       onAuth(data.address);
+
+      const balRes = await fetch(
+        `/api/token/balance?address=${encodeURIComponent(data.address)}&token_id=1`
+      );
+      const balData = await balRes.json();
+      if (balRes.ok) {
+        setBalance(balData.balance);
+      }
+
     } catch (e: any) {
       setError(
         e?.message || "Fallo de autenticación (¿corriendo 'npx chopd'?)"
@@ -49,9 +60,17 @@ export default function AuthButton({
   return (
     <div style={{ marginBottom: 12 }}>
       {address ? (
-        <div style={{ fontSize: 14 }}>
-          Conectado como <code>{address}</code>
-        </div>
+        <>
+          <div style={{ fontSize: 14 }}>
+            Conectado como <code>{address}</code>
+          </div>
+          <div>
+              Saldo:{" "}
+              <code>
+                {balance !== null ? `${balance} ${symbol}` : "Cargando..."}
+              </code>
+          </div>
+        </>
       ) : (
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           <button
