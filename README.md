@@ -1,3 +1,44 @@
+# Cambios principales en este fork
+
+Este fork añade funcionalidades extra sobre el proyecto original.
+
+
+## Funcionalidades añadidas
+
+- Se integró **SQLite** como base de datos local.  
+- Se crearon las tablas `tokens` y `balances`. 
+- Se creo la tabla `responses` y se hicieron modificaciones para hacer uso de la base de datos.
+- Se creo un **script de seed** para inicializar la DB con un token de prueba.
+- cambios en la interfaz:
+  - Sección **"Balance"** donde se muestra el saldo actual de la wallet.  
+  - Botón **"Reclamar tokens"** para asignar tokens a la wallet del usuario. 
+   
+
+---
+
+## Pasos extra de inicialización
+
+1. Instalar dependencias (si no lo hiciste antes):  
+   ```bash
+   npm i
+   ```
+
+2. Ejecutar el script de seed para registrar el token:  
+   ```bash
+   npx tsx seed.ts
+   ```
+
+3. Continuar con la ejecución normal del proyecto (ver instrucciones originales).
+
+## Créditos
+
+Este proyecto se basa en el trabajo original de Favio Montealegre (https://github.com/Fsk8/quiz-chopin).  
+Muchas gracias por el código base y la inspiración 🙌
+
+---
+# Proyecto original
+> ⚠️ Lo que sigue a continuación es el README original del repositorio base.
+
 # Quiz relámpago verificable — Chopin + Celestia
 
 Demo educativa para introducir Chopin (login y verificabilidad) y Celestia (Data Availability). Incluye:
