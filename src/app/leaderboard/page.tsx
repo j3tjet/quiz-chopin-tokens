@@ -52,7 +52,15 @@ export default function LeaderboardPage() {
     <div style={{ maxWidth: 680, margin: "0 auto", padding: 16 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <h1>Leaderboard</h1>
-        <button onClick={handleClaim} disabled={claiming || claimed}>
+        <button onClick={handleClaim} disabled={claiming || claimed}
+          className={`px-4 py-2 rounded font-semibold text-white transition-colors ${
+            claimed
+              ? "bg-gray-400 cursor-not-allowed"
+              : claiming
+              ? "bg-blue-500 cursor-wait"
+              : "bg-green-600 hover:bg-green-700"
+          }`}
+          >
           {claimed ? "Ya reclamado" : claiming ? "Reclamando…" : "Reclamar tokens"}
         </button>
       </div>
